@@ -19,8 +19,12 @@ deposit_amount = npf.pmt(rate, nper, 0, -future_price)
 print(f"Miesięczna wymagana wpłata do banku wynosi: {deposit_amount: .2f}zł")
 #Miesięcnza wymagana wpłata: 1875.28zł
 
-plt.plot(future_price,label='Home price')
-plt.plot(deposit_amount,label='Deposit value')
+months = np.arange(0, nper + 1)
+home_value = home_price * (1 + percent_year/12) ** months
+deposit_value = npf.fv(rate, months, -deposit_amount, 0)
+
+plt.plot(months, home_value, label='Home price')
+plt.plot(months, deposit_value, label='Deposit value')
 plt.xlabel('Months')
 plt.ylabel('Value [zł]')
 plt.legend()
